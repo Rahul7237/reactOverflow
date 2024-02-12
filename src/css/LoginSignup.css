@@ -70,6 +70,21 @@
     color: #343a40;  /* Darker color on hover */
 }
 
+/* Password Input Styles */
+.password-input {
+    position: relative; /* Add this line */
+  }
+  
+  .password-toggle {
+    position: absolute; /* Add this line */
+    right: 10px; /* Adjust the position as needed */
+    top: 55%; /* Adjust the position as needed */
+    transform: translateY(-50%); /* Center vertically */
+    background: none; /* Remove background */
+    border: none; /* Remove border */
+    cursor: pointer; /* Add cursor pointer */
+  }
+
 /* Responsive Design */
 @media screen and (max-width: 768px) {
     .login-card {
@@ -77,4 +92,3 @@
         padding: 20px;
     }
 }
-

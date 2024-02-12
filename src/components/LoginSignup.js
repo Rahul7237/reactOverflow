@@ -1,7 +1,8 @@
-// LoginSignup.js
 import React, { useState, useEffect } from 'react';
 import '../css/LoginSignup.css';
 import { BaseURL } from '../Keys';
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import eye icons
+
 const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
   const [signUpData, setSignUpData] = useState({
     firstName: '',
@@ -18,6 +19,7 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
   });
 
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // State to manage password visibility
 
   const handleSignUpChange = (e) => {
     setSignUpData({ ...signUpData, [e.target.name]: e.target.value });
@@ -29,6 +31,11 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
 
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
+    if (!signUpData.password || signUpData.password.trim() === '') {
+      setError('Please enter a password.');
+      return;
+    }
+    
     if (signUpData.password !== signUpData.confirmPassword) {
       setError('Passwords do not match.');
       return;
@@ -66,14 +73,11 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
       };
       success(user);
 
-      // Store user details in a cookie with a 7-day expiration
       document.cookie = `userDetails=${JSON.stringify(user)}; path=/; expires=${new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toUTCString()}`;
-
-      // Store JWT token in a separate cookie with a 7-day expiration
       document.cookie = `jwtToken=${data.jwt}; path=/; expires=${new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toUTCString()}`;
 
-      // Pass the token to the parent component
       handletoken(data.jwt);
+      setError(''); // Clear error state after successful signup
     } catch (error) {
       console.error('Signup failed:', error);
       setError('Signup failed. Please try again.');
@@ -82,6 +86,10 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
+    if (!loginData.password || loginData.password.trim() === '') {
+      setError('Please enter a password.');
+      return;
+    }
     try {
       const response = await fetch(`${BaseURL}/authenticate`, {
         method: 'POST',
@@ -111,14 +119,11 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
       };
       success(user);
 
-      // Store user details in a cookie with a 7-day expiration
       document.cookie = `userDetails=${JSON.stringify(user)}; path=/; expires=${new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toUTCString()}`;
-
-      // Store JWT token in a separate cookie with a 7-day expiration
       document.cookie = `jwtToken=${data.jwt}; path=/; expires=${new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toUTCString()}`;
 
-      // Pass the token to the parent component
       handletoken(data.jwt);
+      setError(''); // Clear error state after successful login
     } catch (error) {
       console.error('Login error:', error);
       setError('Login failed. Please try again.');
@@ -126,18 +131,18 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
   };
 
   useEffect(() => {
-    // Check if the user is already logged in (by checking cookies)
     const storedUserDetails = getCookie('userDetails');
     const storedToken = getCookie('jwtToken');
 
     if (storedUserDetails && storedToken) {
       console.log('User details are already available:', JSON.parse(storedUserDetails));
-      // Optionally, you might want to fetch additional user details using the stored user information
-
-      // Set user details directly in the success function
       success(JSON.parse(storedUserDetails));
     }
   }, [success]);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div className="login-card">
@@ -146,29 +151,41 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
           Log in
           <form onSubmit={handleLoginSubmit}>
             <input type="email" name="email" placeholder="Email" onChange={handleLoginChange} />
-            <input type="password" name="password" placeholder="Password" onChange={handleLoginChange} />
+            <div className="password-input">
+              <input type={showPassword ? "text" : "password"} name="password" placeholder="Password" onChange={handleLoginChange} />
+              <span className="password-toggle" onClick={togglePasswordVisibility}>
+              {showPassword ? <i class="fa fa-eye-slash"></i> : <i class="fa fa-eye"></i>} {/* Eye icon */}
+                </span>
+            </div>
+            {error && <p className="error">{error}</p>}
             <button type="submit">Log In</button>
           </form>
           <button onClick={() => onModeChange('signup')}>Sign Up</button>
         </div>
       )}
+{mode === 'signup' && (
+  <div>
+    Sign Up
+    <form onSubmit={handleSignUpSubmit}>
+      <input type="text" name="firstName" placeholder="First Name" onChange={handleSignUpChange} />
+      <input type="text" name="lastName" placeholder="Last Name" onChange={handleSignUpChange} />
+      <input type="email" name="email" placeholder="Email" onChange={handleSignUpChange} />
+      <input type="text" name="mobile" placeholder="Mobile Number" onChange={handleSignUpChange} />
+      <div className="password-input">
+        <input type={showPassword ? "text" : "password"} name="password" placeholder="Password" onChange={handleSignUpChange} />
+        <span className="password-toggle" onClick={togglePasswordVisibility}>
+          {showPassword ? <i class="fa fa-eye-slash"></i> : <i class="fa fa-eye"></i>} {/* Eye icon */}
+        </span>
+      </div>
+      <input type="password" name="confirmPassword" placeholder="Confirm Password" onChange={handleSignUpChange} />
+      {error && <p className="error">{error}</p>}
+      <button type="submit">Sign Up</button>
+    </form>
+    <button onClick={() => onModeChange('login')}>Log In</button>
+  </div>
+)}
 
-      {mode === 'signup' && (
-        <div>
-          Sign Up
-          <form onSubmit={handleSignUpSubmit}>
-            <input type="text" name="firstName" placeholder="First Name" onChange={handleSignUpChange} />
-            <input type="text" name="lastName" placeholder="Last Name" onChange={handleSignUpChange} />
-            <input type="email" name="email" placeholder="Email" onChange={handleSignUpChange} />
-            <input type="text" name="mobile" placeholder="Mobile Number" onChange={handleSignUpChange} />
-            <input type="password" name="password" placeholder="Password" onChange={handleSignUpChange} />
-            <input type="password" name="confirmPassword" placeholder="Confirm Password" onChange={handleSignUpChange} />
-            {error && <p className="error">{error}</p>}
-            <button type="submit">Sign Up</button>
-          </form>
-          <button onClick={() => onModeChange('login')}>Log In</button>
-        </div>
-      )}
+
     </div>
   );
 };
