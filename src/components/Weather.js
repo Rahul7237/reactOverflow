@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFrown } from '@fortawesome/free-solid-svg-icons';
 import { Oval } from 'react-loader-spinner';
 import '../css/Weather.css'; // Ensure this path matches your CSS file's location
 
-function Weather({Weather}) {
+function Weather({ Weather }) {
     const [input, setInput] = useState('');
     const [weather, setWeather] = useState({
         loading: false,
@@ -24,18 +23,19 @@ function Weather({Weather}) {
     const fetchWeather = async (lat, lon, city = null) => {
         //setWeather({ ...weather, loading: true });
         const apiKey = '433894e0bdab09b4cea83d34e561f606'; // Replace with your actual API key
-        let url = city ? 
+        let url = city ?
             `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}` :
             `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
 
         try {
-            const response = await axios.get(url);
-            setWeather({ data: response.data, loading: false, error: false });
+            const response = await fetch(url);
+            const responseData = await response.json();
+            setWeather({ data: responseData, loading: false, error: false });
             const weatherData = {
-                cityName: response.data.name,
-                temp: Math.round(response.data.main.temp),
-                weatherLooks: response.data.weather[0].description.toUpperCase(),
-                icon: response.data.weather[0].icon,
+                cityName: responseData.name,
+                temp: Math.round(responseData.main.temp),
+                weatherLooks: responseData.weather[0].description.toUpperCase(),
+                icon: responseData.weather[0].icon,
             }
             Weather(weatherData);
         } catch (error) {
@@ -65,7 +65,7 @@ function Weather({Weather}) {
 
     return (
         <div className="weather-app">
-           <h2> Explore Weather With City Names</h2>
+            <h2> Explore Weather With City Names</h2>
             <div className="search-bar">
                 <input
                     type="text"
@@ -109,3 +109,4 @@ function Weather({Weather}) {
 }
 
 export default Weather;
+
