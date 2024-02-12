@@ -1,0 +1,69 @@
+.side-nav-bar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  z-index: 12000;
+  top: 0;
+  left: 0;
+  background-color: #263238;
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: 0.5s;
+}
+
+  
+  .side-nav-bar a {
+    padding: 8px 15px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #CFD8DC;
+    display: block;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  
+  .side-nav-bar a:hover {
+    color: #FFAB40;
+    background-color: #37474F;
+  }
+  .sideBarAction{
+    display: block;
+  }
+  .side-nav-bar .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    font-size: 30px;
+    color: #CFD8DC;
+    cursor: pointer;
+  }
+  
+  .user-profile {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #37474F;
+  }
+  
+  .user-icon {
+    font-size: 80px; 
+    color: #BBDEFB;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    background-color: #263238;
+  }
+  
+  .user-name {
+    color: #ECEFF1;
+    margin-top: 10px;
+    font-size: 18px;
+  }
+  .container {
+    position: relative;
+    z-index: 12001; /* Ensure the z-index is higher than the sidebar */
+  }

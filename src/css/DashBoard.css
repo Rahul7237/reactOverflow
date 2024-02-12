@@ -1,0 +1,61 @@
+/* DashBoard.css */
+.dashboard {
+  padding: 20px;
+  background-color: #f0f4f8; /* Light blue-gray */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 20px auto;
+  text-align: center;
+  margin-top: 100px;
+}
+
+.dashboard h1 {
+  color: #1a202c; /* Dark blue-gray */
+  margin-bottom: 20px;
+}
+
+.dashboard-content {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.user-stats, .recent-activity {
+  background-color: #ffffff; /* White */
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 45%;
+}
+
+.user-stats h3, .recent-activity h3 {
+  color: #4a5568; /* Gray */
+}
+
+body {
+  background: #261f3a; 
+  margin-top: 100px;
+}
+
+.charts {
+  display: flex;
+ margin: auto;
+  max-width: 80%;
+  text-align: center;
+  background-color: #180b1d;
+}
+
+.chart1 {
+  background: #4299e1; /* Light blue */
+  width: 60%;
+  margin: 50px;
+  margin-left: 50px;
+  border-radius: 10px;
+}
+
+.chart2 {
+  background: #f56565; /* Light red */
+  margin: 50px;
+  border-radius: 10px;
+}

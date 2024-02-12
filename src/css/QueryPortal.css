@@ -1,0 +1,53 @@
+/* Updated CSS for Question Container */
+.questions-container {
+  max-height: 400px; /* Adjust height as needed */
+  overflow-y: auto;
+}
+
+
+
+
+
+.answers {
+  margin-left: 20px;
+  padding-left: 20px; /* Adjusted padding for better indentation */
+  border-left: 2px solid #3498db; /* Adjusted border color */
+}
+
+/* Updated CSS for Community Queries */
+
+.community-queries {
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+}
+/* Updated CSS for Ask Question Button */
+.ask-question-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  /* Add more styling as needed */
+}
+
+/* Added Styling for Floating Ask Question Button */
+.floating-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #007bff;
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  /* Add more styling as needed */
+}
+
+/* Hover effect for Floating Ask Question Button */
+.floating-button:hover {
+  background-color: #0056b3;
+}

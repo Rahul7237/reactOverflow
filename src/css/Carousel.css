@@ -1,0 +1,43 @@
+.carousel {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    overflow: hidden;
+}
+
+.carousel-images {
+    display: flex;
+}
+
+.carousel-images .image {
+    min-width: 100%;
+    transition: 0.5s ease all;
+    opacity: 0;
+    background-size: cover;
+    background-position: center;
+    height: 300px; /* Adjust the height as needed */
+}
+
+.carousel-images .image.active {
+    opacity: 1;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px 20px;
+}
+
+.carousel-button.prev {
+    left: 10px;
+}
+
+.carousel-button.next {
+    right: 10px;
+}
