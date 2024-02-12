@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFrown } from '@fortawesome/free-solid-svg-icons';
-import { Oval } from 'react-loader-spinner';
 import '../css/Weather.css'; // Ensure this path matches your CSS file's location
 
 function Weather({ Weather }) {
@@ -76,7 +75,6 @@ function Weather({ Weather }) {
                     onKeyPress={handleSearch}
                 />
             </div>
-            {weather.loading && <Oval type="Oval" color="#0d47a1" height={100} width={100} />}
             {weather.error && (
                 <span className="error-message">
                     <FontAwesomeIcon icon={faFrown} />
@@ -109,4 +107,3 @@ function Weather({ Weather }) {
 }
 
 export default Weather;
-
