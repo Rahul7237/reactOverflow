@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { faFrown } from '@fortawesome/free-solid-svg-icons';
 import '../css/Weather.css'; // Ensure this path matches your CSS file's location
 
 function Weather({ Weather }) {
