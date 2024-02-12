@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFrown } from '@fortawesome/free-solid-svg-icons';
 import '../css/Weather.css'; // Ensure this path matches your CSS file's location
 
@@ -77,7 +76,6 @@ function Weather({ Weather }) {
             </div>
             {weather.error && (
                 <span className="error-message">
-                    <FontAwesomeIcon icon={faFrown} />
                     <span style={{ marginLeft: '10px' }}>{weather.errorMessage}</span>
                 </span>
             )}
