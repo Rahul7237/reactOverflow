@@ -1,7 +1,7 @@
 // LoginSignup.js
 import React, { useState, useEffect } from 'react';
 import '../css/LoginSignup.css';
-
+import { BaseURL } from '../Keys';
 const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
   const [signUpData, setSignUpData] = useState({
     firstName: '',
@@ -35,7 +35,7 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:7000/signUp', {
+      const response = await fetch({BaseURL} + '/signUp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:7000/authenticate', {
+      const response = await fetch({BaseURL} +'/authenticate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

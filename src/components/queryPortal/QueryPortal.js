@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Question from './Question';
 import AskQues from './AskQues';
 import '../../css/QueryPortal.css';
-
+import { BaseURL } from '../../Keys';
 const QueryPortal = ({ user, tokenValue }) => {
   const [questions, setQuestions] = useState([]);
   const [askMode, setAskMode] = useState(false);
@@ -12,7 +12,7 @@ const QueryPortal = ({ user, tokenValue }) => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await fetch('http://localhost:7000/query/ques', {
+        const response = await fetch({ BaseURL } + '/query/ques', {
           headers: {
             'Authorization': `Bearer ${tokenValue}`,
             'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ const QueryPortal = ({ user, tokenValue }) => {
         address: ques.address
       };
 console.log( "loaction" + ques.location);
-      const response = await fetch('http://localhost:7000/query/addques', {
+      const response = await fetch({ BaseURL } + '/query/addques', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

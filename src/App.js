@@ -8,7 +8,7 @@ import PublicDashboard from "../src/components/PublicDashBoard";
 import QueryPortal from "../src/components/queryPortal/QueryPortal";
 import Weather from "./components/Weather";
 import InterestingFactComponent from "./components/InterestingFactComponent";
-
+import { BaseURL } from "./Keys";
 const App = () => {
   const [showCard, setShowCard] = useState(false);
   const [auth, setAuth] = useState(false);
