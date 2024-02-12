@@ -12,7 +12,7 @@ const QueryPortal = ({ user, tokenValue }) => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await fetch({ BaseURL } + '/query/ques', {
+        const response = await fetch(`${BaseURL}/query/ques`, {
           headers: {
             'Authorization': `Bearer ${tokenValue}`,
             'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ const QueryPortal = ({ user, tokenValue }) => {
         address: ques.address
       };
 console.log( "loaction" + ques.location);
-      const response = await fetch({ BaseURL } + '/query/addques', {
+      const response = await fetch(`${BaseURL}/query/addques`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

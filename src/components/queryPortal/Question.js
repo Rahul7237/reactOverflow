@@ -26,7 +26,7 @@ const Question = ({ title, quesDesc, firstName, lastName, createDate, questionId
   const handlePostAnswer = async () => {
     if (newAnswer.trim() !== '') {
       try {
-        const response = await fetch({ BaseURL } +'/query/addAns', {
+        const response = await fetch(`${BaseURL}/query/addAns`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ const Question = ({ title, quesDesc, firstName, lastName, createDate, questionId
 
   const fetchAnswers = useCallback(async () => {
     try {
-      const response = await fetch({ BaseURL } + `/query/ansbyQuesId/${questionId}`, {
+      const response = await fetch(`${BaseURL}/query/ansbyQuesId/${questionId}` , {
         headers: {
           'Authorization': `Bearer ${tokenValue}`,
         },

@@ -35,7 +35,7 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
     }
 
     try {
-      const response = await fetch({BaseURL} + '/signUp', {
+      const response = await fetch(`${BaseURL}/signUp`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch({BaseURL} +'/authenticate', {
+      const response = await fetch(`${BaseURL}/authenticate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
