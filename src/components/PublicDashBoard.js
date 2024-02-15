@@ -1,10 +1,14 @@
 // PublicDashboard.js
 import React from 'react';
+import Slider from 'react-slick';
 import Card from './Card';
 import '../css/PublicDashBoard.css';
 import friend from '../images/friend.jpg'
 import support from '../images/support.jpg'
 import secure from '../images/secure.jpg'
+import manthinking from '../images/Man-thinking-pana.png'
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const PublicDashboard = ({ onLoginClick, onSignupClick}) => {
     const features = [
@@ -12,6 +16,11 @@ const PublicDashboard = ({ onLoginClick, onSignupClick}) => {
             title: "User-Friendly Interface",
             content: "Our platform is designed for easy navigation and a seamless experience.",
             image: friend
+        },
+        {
+            title: "User-Friendly Interface",
+            content: "Our platform is designed for easy navigation and a seamless experience.",
+            image: manthinking
         },
         {
             title: "24/7 Support",
@@ -26,6 +35,16 @@ const PublicDashboard = ({ onLoginClick, onSignupClick}) => {
         // Add more features as needed
     ];
 
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true, // Enable autoplay
+        autoplaySpeed: 3000, // Set the interval between slides in milliseconds
+    };
+
     return (
         <div className="public-dashboard">
             <section className="welcome-section">
@@ -34,14 +53,17 @@ const PublicDashboard = ({ onLoginClick, onSignupClick}) => {
             </section>
 
             <section className="features-section">
-                {features.map((feature, index) => (
-                    <Card 
-                        key={index}
-                        title={feature.title}
-                        content={feature.content}
-                        image={feature.image}
-                    />
-                ))}
+                <Slider {...settings}>
+                    {features.map((feature, index) => (
+                        <div key={index}>
+                            <Card 
+                                title={feature.title}
+                                content={feature.content}
+                                image={feature.image}
+                            />
+                        </div>
+                    ))}
+                </Slider>
             </section>
 
             <section className="call-to-action">

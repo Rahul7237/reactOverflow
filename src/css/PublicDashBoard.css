@@ -20,7 +20,18 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    text-align: center;
     margin-bottom: 2em;
+}
+
+.features-section .slick-slider {
+    width: 40%; /* Adjust the width as needed */
+    margin: auto; /* Center the slider */
+}
+
+.features-section .slick-slide {
+    padding: 0 10px; /* Adjust slide spacing */
+    text-align: left;
 }
 
 .call-to-action {
@@ -52,4 +63,11 @@
 .call-to-action button:hover {
     background-color: #0056b3;
     color: #343a40; 
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .features-section .slick-slider {
+        width: 90%; /* Adjust width for smaller screens */
+    }
 }
