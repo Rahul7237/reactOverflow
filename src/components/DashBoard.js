@@ -321,8 +321,8 @@ const renderRecentActivity = () => {
     <div className="dashboard">
     <h1>Welcome, {userData.firstName}!</h1>
     <div className="dashboard-content">
-      <button onClick={() => handleSectionClick('yourStats')}>Your Stats</button>
-      <button onClick={() => handleSectionClick('recentActivity')}>Recent Activity</button>
+      {/* <button onClick={() => handleSectionClick('yourStats')}>Your Stats</button> */}
+      {/* <button onClick={() => handleSectionClick('recentActivity')}>Recent Activity</button> */}
     </div>
     </div>
     {activeSection === 'yourStats' && renderYourStats()}

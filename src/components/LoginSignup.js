@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../css/LoginSignup.css';
 import { BaseURL } from '../Keys';
+import loginimage from '../images/login.jpg'
 
 const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
   const [signUpData, setSignUpData] = useState({
@@ -25,6 +26,7 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [resendDisabled, setResendDisabled] = useState(false);
   const [resendTimer, setResendTimer] = useState(0);
+  const [loading, setLoading] = useState(false); 
   useEffect(() => {
     setError('');
     if(mode!=='forgot'){
@@ -41,6 +43,10 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
     console.log("change mode" + mode);
   }, [mode]);
 
+  const SimpleLoader = () => (
+    <div className="loader">
+    </div>
+  );
   const handleSignUpChange = (e) => {
     setSignUpData({ ...signUpData, [e.target.name]: e.target.value });
   };
@@ -51,7 +57,7 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
 
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     if (!signUpData.firstName.trim()) {
       setError('Please enter your first name.');
       return;
@@ -115,11 +121,14 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
       console.error('Signup failed:', error);
       setError('Signup failed. Please try again.');
     }
+  finally {
+    setLoading(false); // Set loading state to false once API call is complete
+  }
   };
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-
+      setLoading(true);
     if (!loginData.email.trim()) {
       setError('Please enter your email.');
       return;
@@ -170,6 +179,9 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
       console.error('Login error:', error);
       setError('Login failed. Please try again.');
     }
+    finally {
+      setLoading(false); // Set loading state to false once API call is complete
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -194,6 +206,7 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
   };
   const sendOtp = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (!signUpData.email.trim()) {
       setError('Please enter your email.');
     } else {
@@ -225,11 +238,15 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
         console.error('Failed to send OTP:', error);
         setError('Failed to send OTP. Please try again.');
       }
+      finally {
+        setLoading(false); // Set loading state to false once API call is complete
+      }
     }
   };
   
   const handleOtpVerification = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const otpValue = Object.values(otp).join('');
     console.log('Verifying OTP:', otpValue);
     try {
@@ -261,17 +278,29 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
       console.error('OTP verification failed:', error);
       setError('OTP verification failed. Please try again.');
     }
+    finally {
+      setLoading(false); // Set loading state to false once API call is complete
+    }
   };
   
   const handleOtpChange = (e) => {
     const { name, value } = e.target;
     const updatedOtp = value.replace(/\D/g, '').slice(0, 1); // Ensuring only one digit is entered
     setOtp({ ...otp, [name]: updatedOtp });
-    console.log(otp);
+  
+    // Move focus to the next input box if a character is entered
+    if (updatedOtp && e.target.nextElementSibling) {
+      e.target.nextElementSibling.focus();
+    } else if (!updatedOtp && e.target.previousElementSibling) {
+      // Move focus to the previous input box if backspace is pressed and the current input is empty
+      e.preventDefault(); // Prevent the default behavior of backspace (which is deleting the character)
+      e.target.previousElementSibling.focus();
+    }
   };
 
   const UpdatePassword = async(e) => {
     e.preventDefault();
+    setLoading(true);
     if (!signUpData.password.trim()) {
       setError('Please enter a password.');
       return;
@@ -311,6 +340,9 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
       setError('OTP verification failed. Please try again.');
     }
 
+    finally {
+      setLoading(false); // Set loading state to false once API call is complete
+    }
    console.log("passwordUpdated");
   };
   const startResendTimer = () => {
@@ -341,7 +373,13 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
     }
   }, [successMessage, error, mode]);
   return (
-    <div className="login-card">
+    <div className="login-page">
+      {loading && <SimpleLoader />}
+      <div className="login-card">
+        <div className="login-image">
+          <img src={loginimage} alt="login" className="login-image1" />
+        </div>
+        <div className="form-container">
       {error && <p className="error">{error}</p>}
       {successMessage && <p className="success">{successMessage}</p>}
       {!forgotMode && mode === 'login' && (
@@ -373,7 +411,6 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
             <input type="text" name="firstName" placeholder="First Name" onChange={handleSignUpChange} />
             <input type="text" name="lastName" placeholder="Last Name" onChange={handleSignUpChange} />
             <input type="email" name="email" placeholder="Email" onChange={handleSignUpChange} />
-            <input type="text" name="mobile" placeholder="Mobile Number" onChange={handleSignUpChange} />
             <div className="password-input">
               <input type={showPassword ? "text" : "password"} name="password" placeholder="Password" onChange={handleSignUpChange} />
               <span className="password-toggle" onClick={togglePasswordVisibility}>
@@ -410,12 +447,11 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
       </div>
       <button type="submit">Verify</button>
     </form>
-    {resendTimer > 0 && (
-            <p>Resend OTP in {resendTimer} seconds</p>
-          )}
-          {resendTimer === 0 && !resendDisabled && (
-            <button onClick={sendOtp}>Resend OTP</button>
-          )}
+    {resendTimer > 0 ? (
+  <p>Resend OTP in {resendTimer} seconds</p>
+) : (
+  !resendDisabled && <span className="spanforcheck" onClick={sendOtp}>Resend otp</span>
+)}
   </div>
 )}
 
@@ -436,6 +472,8 @@ const LoginSignup = ({ mode, onModeChange, onClose, success, handletoken }) => {
           {/* Add your forgot password logic here */}
         </div>
       )}
+    </div>
+    </div>
     </div>
   );
 };
